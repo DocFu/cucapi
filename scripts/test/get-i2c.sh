@@ -1,4 +1,0 @@
-#!/bin/bash
-
-echo "0x00"
-echo "0xff"

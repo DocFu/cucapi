@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import de.plasmawolke.cucapi.Version;
 import de.plasmawolke.cucapi.hap.accessories.Lightbulb;
+import io.github.hapjava.accessories.HomekitAccessory;
 import io.github.hapjava.server.impl.HomekitRoot;
 import io.github.hapjava.server.impl.HomekitServer;
 
@@ -39,16 +40,16 @@ public class HomekitService {
         this.port = port;
     }
 
-    public void runWithAccessories(Collection<Lightbulb> lightbulbs) throws Exception {
+    public void runWithAccessories(Collection<HomekitAccessory> accessories) throws Exception {
 
         HomekitServer homekitServer = new HomekitServer(address, port);
         AuthInfo authInfo = createAuthInfo();
         HomekitRoot bridge = homekitServer.createBridge(authInfo, model, 1, manufacturer, model, serialNumber,
                 firmwareRevision, hardwareRevision);
 
-        for (Lightbulb lightbulb : lightbulbs) {
-            logger.info("Adding HomeKit Accessory: " + lightbulb);
-            bridge.addAccessory(lightbulb);
+        for (HomekitAccessory accessory : accessories) {
+            logger.info("Adding HomeKit Accessory: " + accessory);
+            bridge.addAccessory(accessory);
         }
 
         bridge.start();

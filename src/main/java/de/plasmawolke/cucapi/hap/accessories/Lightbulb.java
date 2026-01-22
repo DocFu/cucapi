@@ -2,46 +2,34 @@ package de.plasmawolke.cucapi.hap.accessories;
 
 import java.util.concurrent.CompletableFuture;
 
+import de.plasmawolke.cucapi.i2c.MCP27013_PIN;
+import io.github.hapjava.accessories.LightbulbAccessory;
 import io.github.hapjava.characteristics.HomekitCharacteristicChangeCallback;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class Lightbulb extends BaseLightbulb {
+public class Lightbulb extends BaseAccessory implements LightbulbAccessory {
 
-    private static final Logger logger = LoggerFactory.getLogger(Lightbulb.class);
-
-    public Lightbulb(int id, String name) {
-        super(id, name);
+    public Lightbulb(int hapId, MCP27013_PIN pin) {
+        super(hapId, pin);
     }
-
-    private boolean powerState;
-    private HomekitCharacteristicChangeCallback powerStateCallback;
 
     @Override
     public CompletableFuture<Boolean> getLightbulbPowerState() {
-        return CompletableFuture.completedFuture(powerState);
+        return getPowerState();
     }
 
     @Override
     public CompletableFuture<Void> setLightbulbPowerState(boolean powerState) throws Exception {
-        logger.info(
-                "Setting state of " + getName().get() + "(" + getId() + ") from " + this.powerState + " to "
-                        + powerState);
-        this.powerState = powerState;
-        if (powerStateCallback != null) {
-            powerStateCallback.changed();
-        }
-        return CompletableFuture.completedFuture(null);
+        return setPowerState(powerState);
     }
 
     @Override
     public void subscribeLightbulbPowerState(HomekitCharacteristicChangeCallback callback) {
-        this.powerStateCallback = callback;
+        subscribePowerState(callback);
     }
 
     @Override
     public void unsubscribeLightbulbPowerState() {
-        // do nothing
+        unsubscribePowerState();
     }
 
 }
