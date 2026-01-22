@@ -66,7 +66,7 @@ public class I2C {
             // ### IODIR PORT B alle out
             exec("i2cset -y 1 " + hexAddressOutput + " 0x01 0x00");
 
-            updatePinStates();
+            updatePinStates(true);
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Failed to initialize I2C", e);
@@ -93,11 +93,13 @@ public class I2C {
         return pinState.getOrDefault(pin, false);
     }
 
-    public void updatePinStates() {
-        logger.trace("Updating pin states...");
+    public void updatePinStates(boolean log) {
+        if (log) {
+            logger.info("Updating pin states...");
+        }
         try {
-            String stateA = exec("i2cget -y 1 " + hexAddressInput + " 0x12", false);
-            String stateB = exec("i2cget -y 1 " + hexAddressInput + " 0x13", false);
+            String stateA = exec("i2cget -y 1 " + hexAddressInput + " 0x12", log);
+            String stateB = exec("i2cget -y 1 " + hexAddressInput + " 0x13", log);
             int stateAInt = Integer.parseInt(stateA.substring(2), 16);
             int stateBInt = Integer.parseInt(stateB.substring(2), 16);
             pinState.put(MCP27013_PIN.A0, isBitSet(stateAInt, 0));
@@ -116,7 +118,9 @@ public class I2C {
             pinState.put(MCP27013_PIN.B5, isBitSet(stateBInt, 5));
             pinState.put(MCP27013_PIN.B6, isBitSet(stateBInt, 6));
             pinState.put(MCP27013_PIN.B7, isBitSet(stateBInt, 7));
-            logger.trace("Pin states updated: " + pinState);
+            if (log) {
+                logger.info("Pin states updated: " + pinState);
+            }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Failed to update pin states", e);
         }

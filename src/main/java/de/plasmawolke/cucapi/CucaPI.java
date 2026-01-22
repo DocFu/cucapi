@@ -44,7 +44,7 @@ public class CucaPI {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                I2C.getInstance().updatePinStates();
+                I2C.getInstance().updatePinStates(false);
             } catch (Exception e) {
                 logger.error("Error updating pin states: " + e.getMessage(), e);
             }
