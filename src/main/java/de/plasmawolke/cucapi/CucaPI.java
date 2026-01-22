@@ -83,19 +83,41 @@ public class CucaPI {
         List<BaseAccessory> accessories = new ArrayList<>();
         BaseAccessory accessory = null;
 
-        accessory = new Lightbulb(10, MCP27013_PIN.A0);
+        accessory = new Outlet(11, MCP27013_PIN.A0);
         accessories.add(accessory);
 
-        accessory = new Lightbulb(11, MCP27013_PIN.A1);
+        accessory = new Outlet(12, MCP27013_PIN.A1);
         accessories.add(accessory);
 
-        accessory = new Outlet(12, MCP27013_PIN.B0);
+        accessory = new Outlet(13, MCP27013_PIN.A2);
         accessories.add(accessory);
 
-        accessory = new Outlet(13, MCP27013_PIN.B1);
+        accessory = new Lightbulb(14, MCP27013_PIN.A3);
         accessories.add(accessory);
 
-        // TODO add more accessories
+        accessory = new Outlet(15, MCP27013_PIN.A4);
+        accessories.add(accessory);
+
+        accessory = new Lightbulb(16, MCP27013_PIN.A5);
+        accessories.add(accessory);
+
+        accessory = new Lightbulb(17, MCP27013_PIN.A6);
+        accessories.add(accessory);
+
+        accessory = new Lightbulb(18, MCP27013_PIN.A7);
+        accessories.add(accessory);
+
+        accessory = new Outlet(19, MCP27013_PIN.B0);
+        accessories.add(accessory);
+
+        accessory = new Lightbulb(20, MCP27013_PIN.B1);
+        accessories.add(accessory);
+
+        accessory = new Lightbulb(21, MCP27013_PIN.B2);
+        accessories.add(accessory);
+
+        accessory = new Outlet(22, MCP27013_PIN.B3);
+        accessories.add(accessory);
 
         return accessories;
     }
