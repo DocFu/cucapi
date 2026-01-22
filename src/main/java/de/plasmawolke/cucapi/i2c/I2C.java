@@ -3,11 +3,14 @@ package de.plasmawolke.cucapi.i2c;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.plasmawolke.cucapi.hap.accessories.BaseAccessory;
 
 public class I2C {
 
@@ -22,6 +25,7 @@ public class I2C {
     private boolean initialized = false;
 
     private Map<MCP27013_PIN, Boolean> pinState = new HashMap<>();
+    private Map<MCP27013_PIN, BaseAccessory> pinAccessory = new HashMap<>();
 
     private I2C() {
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
@@ -102,27 +106,85 @@ public class I2C {
             String stateB = exec("i2cget -y 1 " + hexAddressInput + " 0x13", log);
             int stateAInt = Integer.parseInt(stateA.substring(2), 16);
             int stateBInt = Integer.parseInt(stateB.substring(2), 16);
-            pinState.put(MCP27013_PIN.A0, isBitSet(stateAInt, 0));
-            pinState.put(MCP27013_PIN.A1, isBitSet(stateAInt, 1));
-            pinState.put(MCP27013_PIN.A2, isBitSet(stateAInt, 2));
-            pinState.put(MCP27013_PIN.A3, isBitSet(stateAInt, 3));
-            pinState.put(MCP27013_PIN.A4, isBitSet(stateAInt, 4));
-            pinState.put(MCP27013_PIN.A5, isBitSet(stateAInt, 5));
-            pinState.put(MCP27013_PIN.A6, isBitSet(stateAInt, 6));
-            pinState.put(MCP27013_PIN.A7, isBitSet(stateAInt, 7));
-            pinState.put(MCP27013_PIN.B0, isBitSet(stateBInt, 0));
-            pinState.put(MCP27013_PIN.B1, isBitSet(stateBInt, 1));
-            pinState.put(MCP27013_PIN.B2, isBitSet(stateBInt, 2));
-            pinState.put(MCP27013_PIN.B3, isBitSet(stateBInt, 3));
-            pinState.put(MCP27013_PIN.B4, isBitSet(stateBInt, 4));
-            pinState.put(MCP27013_PIN.B5, isBitSet(stateBInt, 5));
-            pinState.put(MCP27013_PIN.B6, isBitSet(stateBInt, 6));
-            pinState.put(MCP27013_PIN.B7, isBitSet(stateBInt, 7));
+
+            Boolean previousPinStateA0 = pinState.put(MCP27013_PIN.A0, isBitSet(stateAInt, 0));
+            if (pinAccessory.get(MCP27013_PIN.A0) != null && previousPinStateA0 != pinState.get(MCP27013_PIN.A0)) {
+                pinAccessory.get(MCP27013_PIN.A0).updatePowerState();
+            }
+            Boolean previousPinStateA1 = pinState.put(MCP27013_PIN.A1, isBitSet(stateAInt, 1));
+            if (pinAccessory.get(MCP27013_PIN.A1) != null && previousPinStateA1 != pinState.get(MCP27013_PIN.A1)) {
+                pinAccessory.get(MCP27013_PIN.A1).updatePowerState();
+            }
+            Boolean previousPinStateA2 = pinState.put(MCP27013_PIN.A2, isBitSet(stateAInt, 2));
+            if (pinAccessory.get(MCP27013_PIN.A2) != null && previousPinStateA2 != pinState.get(MCP27013_PIN.A2)) {
+                pinAccessory.get(MCP27013_PIN.A2).updatePowerState();
+            }
+            Boolean previousPinStateA3 = pinState.put(MCP27013_PIN.A3, isBitSet(stateAInt, 3));
+            if (pinAccessory.get(MCP27013_PIN.A3) != null && previousPinStateA3 != pinState.get(MCP27013_PIN.A3)) {
+                pinAccessory.get(MCP27013_PIN.A3).updatePowerState();
+            }
+            Boolean previousPinStateA4 = pinState.put(MCP27013_PIN.A4, isBitSet(stateAInt, 4));
+            if (pinAccessory.get(MCP27013_PIN.A4) != null && previousPinStateA4 != pinState.get(MCP27013_PIN.A4)) {
+                pinAccessory.get(MCP27013_PIN.A4).updatePowerState();
+            }
+            Boolean previousPinStateA5 = pinState.put(MCP27013_PIN.A5, isBitSet(stateAInt, 5));
+            if (pinAccessory.get(MCP27013_PIN.A5) != null && previousPinStateA5 != pinState.get(MCP27013_PIN.A5)) {
+                pinAccessory.get(MCP27013_PIN.A5).updatePowerState();
+            }
+            Boolean previousPinStateA6 = pinState.put(MCP27013_PIN.A6, isBitSet(stateAInt, 6));
+            if (pinAccessory.get(MCP27013_PIN.A6) != null && previousPinStateA6 != pinState.get(MCP27013_PIN.A6)) {
+                pinAccessory.get(MCP27013_PIN.A6).updatePowerState();
+            }
+            Boolean previousPinStateA7 = pinState.put(MCP27013_PIN.A7, isBitSet(stateAInt, 7));
+            if (pinAccessory.get(MCP27013_PIN.A7) != null && previousPinStateA7 != pinState.get(MCP27013_PIN.A7)) {
+                pinAccessory.get(MCP27013_PIN.A7).updatePowerState();
+            }
+
+            Boolean previousPinStateB0 = pinState.put(MCP27013_PIN.B0, isBitSet(stateBInt, 0));
+            if (pinAccessory.get(MCP27013_PIN.B0) != null && previousPinStateB0 != pinState.get(MCP27013_PIN.B0)) {
+                pinAccessory.get(MCP27013_PIN.B0).updatePowerState();
+            }
+            Boolean previousPinStateB1 = pinState.put(MCP27013_PIN.B1, isBitSet(stateBInt, 1));
+            if (pinAccessory.get(MCP27013_PIN.B1) != null && previousPinStateB1 != pinState.get(MCP27013_PIN.B1)) {
+                pinAccessory.get(MCP27013_PIN.B1).updatePowerState();
+            }
+            Boolean previousPinStateB2 = pinState.put(MCP27013_PIN.B2, isBitSet(stateBInt, 2));
+            if (pinAccessory.get(MCP27013_PIN.B2) != null && previousPinStateB2 != pinState.get(MCP27013_PIN.B2)) {
+                pinAccessory.get(MCP27013_PIN.B2).updatePowerState();
+            }
+            Boolean previousPinStateB3 = pinState.put(MCP27013_PIN.B3, isBitSet(stateBInt, 3));
+            if (pinAccessory.get(MCP27013_PIN.B3) != null && previousPinStateB3 != pinState.get(MCP27013_PIN.B3)) {
+                pinAccessory.get(MCP27013_PIN.B3).updatePowerState();
+            }
+            Boolean previousPinStateB4 = pinState.put(MCP27013_PIN.B4, isBitSet(stateBInt, 4));
+            if (pinAccessory.get(MCP27013_PIN.B4) != null && previousPinStateB4 != pinState.get(MCP27013_PIN.B4)) {
+                pinAccessory.get(MCP27013_PIN.B4).updatePowerState();
+            }
+            Boolean previousPinStateB5 = pinState.put(MCP27013_PIN.B5, isBitSet(stateBInt, 5));
+            if (pinAccessory.get(MCP27013_PIN.B5) != null && previousPinStateB5 != pinState.get(MCP27013_PIN.B5)) {
+                pinAccessory.get(MCP27013_PIN.B5).updatePowerState();
+            }
+            Boolean previousPinStateB6 = pinState.put(MCP27013_PIN.B6, isBitSet(stateBInt, 6));
+            if (pinAccessory.get(MCP27013_PIN.B6) != null && previousPinStateB6 != pinState.get(MCP27013_PIN.B6)) {
+                pinAccessory.get(MCP27013_PIN.B6).updatePowerState();
+            }
+            Boolean previousPinStateB7 = pinState.put(MCP27013_PIN.B7, isBitSet(stateBInt, 7));
+            if (pinAccessory.get(MCP27013_PIN.B7) != null && previousPinStateB7 != pinState.get(MCP27013_PIN.B7)) {
+                pinAccessory.get(MCP27013_PIN.B7).updatePowerState();
+            }
+
             if (log) {
                 logger.info("Pin states updated: " + pinState);
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Failed to update pin states", e);
+        }
+    }
+
+    public void registerAccessories(Collection<BaseAccessory> accessories) {
+
+        for (BaseAccessory accessory : accessories) {
+            pinAccessory.put(accessory.getMCP27013_PIN(), accessory);
         }
     }
 

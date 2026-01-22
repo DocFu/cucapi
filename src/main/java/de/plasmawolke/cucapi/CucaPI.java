@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 import com.beust.jcommander.JCommander;
 
 import de.plasmawolke.cucapi.hap.HomekitService;
+import de.plasmawolke.cucapi.hap.accessories.BaseAccessory;
 import de.plasmawolke.cucapi.hap.accessories.Lightbulb;
 import de.plasmawolke.cucapi.hap.accessories.Outlet;
 import de.plasmawolke.cucapi.i2c.I2C;
 import de.plasmawolke.cucapi.i2c.MCP27013_PIN;
-import io.github.hapjava.accessories.HomekitAccessory;
 
 public class CucaPI {
 
@@ -64,7 +64,7 @@ public class CucaPI {
             }
         }));
 
-        List<HomekitAccessory> accessories = createAccessories();
+        List<BaseAccessory> accessories = createAccessories();
 
         HomekitService homekitService = new HomekitService(Util.getInetAddress(appArguments.getAddress()),
                 appArguments.getPort());
@@ -74,13 +74,14 @@ public class CucaPI {
             exitWithError("Error while starting HomekitService: " + e.getMessage());
         }
 
+        I2C.getInstance().registerAccessories(accessories);
         I2C.getInstance().runTest();
 
     }
 
-    private static List<HomekitAccessory> createAccessories() {
-        List<HomekitAccessory> accessories = new ArrayList<>();
-        HomekitAccessory accessory = null;
+    private static List<BaseAccessory> createAccessories() {
+        List<BaseAccessory> accessories = new ArrayList<>();
+        BaseAccessory accessory = null;
 
         accessory = new Lightbulb(10, MCP27013_PIN.A0);
         accessories.add(accessory);

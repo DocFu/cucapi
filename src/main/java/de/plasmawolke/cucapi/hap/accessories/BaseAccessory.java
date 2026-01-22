@@ -51,6 +51,17 @@ public abstract class BaseAccessory implements HomekitAccessory {
         this.powerStateCallback = null;
     }
 
+    public void updatePowerState() {
+        if (powerStateCallback != null) {
+            logger.info("Updating power state for " + pin.name());
+            powerStateCallback.changed();
+        }
+    }
+
+    public MCP27013_PIN getMCP27013_PIN() {
+        return pin;
+    }
+
     @Override
     public int getId() {
         return hapId;

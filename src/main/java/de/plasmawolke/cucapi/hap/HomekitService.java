@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.plasmawolke.cucapi.Version;
-import de.plasmawolke.cucapi.hap.accessories.Lightbulb;
+import de.plasmawolke.cucapi.hap.accessories.BaseAccessory;
 import io.github.hapjava.accessories.HomekitAccessory;
 import io.github.hapjava.server.impl.HomekitRoot;
 import io.github.hapjava.server.impl.HomekitServer;
@@ -40,7 +40,7 @@ public class HomekitService {
         this.port = port;
     }
 
-    public void runWithAccessories(Collection<HomekitAccessory> accessories) throws Exception {
+    public void runWithAccessories(Collection<BaseAccessory> accessories) throws Exception {
 
         HomekitServer homekitServer = new HomekitServer(address, port);
         AuthInfo authInfo = createAuthInfo();
