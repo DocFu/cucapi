@@ -168,13 +168,15 @@ public class I2C {
         process.waitFor();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
+        String result = "";
         while ((line = reader.readLine()) != null) {
             if (log) {
                 logger.info("I2C: " + line);
             }
+            result += line;
         }
         reader.close();
-        return line;
+        return result.trim();
     }
 
 }
