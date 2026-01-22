@@ -88,7 +88,10 @@ public class CucaPI {
         accessory = new Lightbulb(11, MCP27013_PIN.A1);
         accessories.add(accessory);
 
-        accessory = new Outlet(12, MCP27013_PIN.A2);
+        accessory = new Outlet(12, MCP27013_PIN.B0);
+        accessories.add(accessory);
+
+        accessory = new Outlet(13, MCP27013_PIN.B1);
         accessories.add(accessory);
 
         // TODO add more accessories
