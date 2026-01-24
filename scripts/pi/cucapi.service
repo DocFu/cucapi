@@ -1,0 +1,13 @@
+[Unit]
+Description=cucapi
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /home/sysop/cucapi/target/cucapi-app.jar
+WorkingDirectory=/home/sysop
+User=sysop
+Restart=always
+Environment=JAVA_HOME=/usr/lib/jvm/java-21-openjdk-armhf
+
+[Install]
+WantedBy=multi-user.target
